@@ -92,7 +92,7 @@ parse_slide <- function(slide){
 split_meta <- function(blocks){
   split_block <- function(block){
     if (grepl("^\\s*\\{", block)){
-      block <- str_split_fixed(block, "}\n", 2)
+      block <- str_split_fixed(block, "\\}\n", 2)
       block[1] <- paste(block[1], "}")
     } else {
       block <- str_split_fixed(block, "\n", 2)
@@ -170,10 +170,10 @@ parse_body <- function(body){
    c('html', 'header', 'level', 'title', 'content'))
   # body = modifyList(body, parse_content(body$content))
   # HACK: So that landslide h1's with no content are centered
-  if (body$content == ""){
+  if (body$content == "" | is.na(body$content)){
   	body$content = NULL
   }
-  if (body$header == ""){
+  if (body$header == "" | is.na(body$header)){
     body$header = NULL
   }
   return(body)
